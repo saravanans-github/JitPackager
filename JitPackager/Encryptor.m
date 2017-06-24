@@ -30,6 +30,7 @@ const NSUInteger kPBKDFRounds = 10000;  // ~80ms on an iPhone 4
     NSData *keyInData = [NSData dataWithHexCString:key];
     NSData *ivInData = [NSData dataWithHexCString:iv];
 
+    // Encrypt the data
     CCCryptorStatus
     result = CCCrypt(kCCEncrypt, // operation
                      kAlgorithm, // Algorithm
@@ -43,8 +44,8 @@ const NSUInteger kPBKDFRounds = 10000;  // ~80ms on an iPhone 4
                      cipherData.length, // dataOutAvailable
                      &outLength); // dataOutMoved
     
+    // TODO: DO ERROR HANDLING
     if (result == kCCSuccess) {
-        NSLog(@"%@", [cipherData hexStringRepresentationUppercase:NO]);
         return cipherData;
     }
     else {
