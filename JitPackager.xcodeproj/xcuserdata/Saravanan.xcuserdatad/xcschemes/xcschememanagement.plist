@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>testJitPackager.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>49CC29AD1EFD7B5B009A63F6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>49CC29BB1EFD7B79009A63F6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
