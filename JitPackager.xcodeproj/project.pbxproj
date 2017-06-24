@@ -12,8 +12,6 @@
 		49CC29C51EFD7BAB009A63F6 /* Encryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC29C41EFD7BAB009A63F6 /* Encryptor.m */; };
 		49CC29C61EFD7BAB009A63F6 /* Encryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC29C41EFD7BAB009A63F6 /* Encryptor.m */; };
 		49CC29C91EFD7BBF009A63F6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CC29C81EFD7BBF009A63F6 /* Security.framework */; };
-		49CC29D31EFEB0A8009A63F6 /* textInClear in Resources */ = {isa = PBXBuildFile; fileRef = 49CC29D21EFEB0A8009A63F6 /* textInClear */; };
-		49CC29D51EFEB157009A63F6 /* encryptedText in Resources */ = {isa = PBXBuildFile; fileRef = 49CC29D41EFEB157009A63F6 /* encryptedText */; };
 		49CC29D81EFEC263009A63F6 /* NSData+FastHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC29D71EFEC263009A63F6 /* NSData+FastHex.m */; };
 		49CC29D91EFEC263009A63F6 /* NSData+FastHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC29D71EFEC263009A63F6 /* NSData+FastHex.m */; };
 /* End PBXBuildFile section */
@@ -40,8 +38,6 @@
 		49CC29C81EFD7BBF009A63F6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		49CC29CA1EFD7CF1009A63F6 /* Encryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encryptor.h; sourceTree = "<group>"; };
 		49CC29CC1EFD8848009A63F6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		49CC29D21EFEB0A8009A63F6 /* textInClear */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = textInClear; sourceTree = "<group>"; };
-		49CC29D41EFEB157009A63F6 /* encryptedText */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = encryptedText; sourceTree = "<group>"; };
 		49CC29D71EFEC263009A63F6 /* NSData+FastHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+FastHex.m"; path = "Utils/NSData+FastHex.m"; sourceTree = "<group>"; };
 		49CC29DA1EFEC3ED009A63F6 /* NSData+FastHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+FastHex.h"; path = "Utils/NSData+FastHex.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,8 +94,6 @@
 		49CC29BD1EFD7B79009A63F6 /* testJitPackager */ = {
 			isa = PBXGroup;
 			children = (
-				49CC29D41EFEB157009A63F6 /* encryptedText */,
-				49CC29D21EFEB0A8009A63F6 /* textInClear */,
 				49CC29BE1EFD7B79009A63F6 /* testJitPackager.m */,
 				49CC29C01EFD7B79009A63F6 /* Info.plist */,
 			);
@@ -203,8 +197,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49CC29D51EFEB157009A63F6 /* encryptedText in Resources */,
-				49CC29D31EFEB0A8009A63F6 /* textInClear in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
