@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Encryptor.h"
+#import "NSData+FastHex.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -17,7 +18,10 @@ int main(int argc, const char * argv[]) {
                 
         NSData *data = [NSData dataWithContentsOfFile:[NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding]];
         
-        [Encryptor encryptData:data withKey:key andIv:iv];
+        NSData *eData = [Encryptor encryptData:data withMethod:kCCModeCTR withKey:key andIv:iv];
+//        NSData *eData = [Encryptor encryptData:data withKey:key andIv:iv];
+        
+        NSLog(@"Encrypted: %@", [eData hexStringRepresentationUppercase:NO]);
 
     }
     return 0;

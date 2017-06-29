@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "../JitPackager/Encryptor.h"
 #import "NSData+FastHex.h"
-\
+
 @interface testJitPackager : XCTestCase
 
 @end
@@ -26,25 +26,28 @@
     [super tearDown];
 }
 
-- (void)testAES128CBCEncryption {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-    
+- (NSData *)doAES128CBCEncryption {
     // Use this hardcoded key and iv pair
     const char *key = "9e1072262511871d6d4a5f9a36a7362f";
     const char *iv = "8ef6bc1ce8edd1d81d9553d34e141cce";
     
     void *data = "Hello World!";
+    
+    return [Encryptor encryptData:[NSData dataWithBytes:data length:sizeof(data)] withKey:key andIv:iv];
+}
+
+- (void)test_AES128CBCEncryption {
+    // Use this hardcoded key and iv pair
     const NSString *encryptedHex = @"d9d1cd1aaf057c9cbf0f8bce1e46825e";
         
-    NSData *encryptedData = [Encryptor encryptData:[NSData dataWithBytes:data length:sizeof(data)] withKey:key andIv:iv];
+    NSData *encryptedData = [self doAES128CBCEncryption];
     XCTAssertEqualObjects([encryptedData hexStringRepresentationUppercase:NO], encryptedHex, @"Success");
 }
 
-- (void)testPerformanceExample {
+- (void)testPerformance_AES128CBCEncryption {
     // This is an example of a performance test case.
     [self measureBlock:^{
-        // Put the code you want to measure the time of here.
+        [self doAES128CBCEncryption];
     }];
 }
 

@@ -10,10 +10,14 @@
 #define Encryptor_h
 
 #import <Foundation/Foundation.h>
+#import <CommonCrypto/CommonCrypto.h>
+#import <CommonCrypto/CommonKeyDerivation.h>
+#import <Security/Security.h>
 
 @interface Encryptor : NSObject
 
 + (NSData*) encryptData:(NSData*)data withKey:(const char*)key andIv:(const char*)iv;
++ (NSData*) encryptData:(NSData*)data withMethod:(CCMode)mode withKey:(const char*)key andIv:(const char*)iv;
 
 @end
 
