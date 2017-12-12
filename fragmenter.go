@@ -3,6 +3,8 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"helper/fs"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -11,7 +13,7 @@ import (
 	"strings"
 )
 
-type empty struct{}
+type done struct{}
 
 func main() {
 	src := "media/BugsBunnyv2.mp4"
@@ -22,27 +24,53 @@ func main() {
 
 	log.Printf("duration: %d", duration)
 
-	sem := make(chan empty, duration) // semaphore pattern
+	sem := make(chan done, duration) // semaphore pattern
 
 	for i := 0; i < len(rendition); i++ {
 		dst := makeRenditionDir(src, rendition[i])
 		for j := 0; j < duration; j++ {
 			go func(iteration int, segment int, dstFilename string) {
 				splitIntoMp4(src, iteration, segment, dstFilename)
-				sem <- empty{}
+				sem <- done{}
 			}(j, segment, dst)
 		}
 	}
 
-	for i := 0; i < duration; i++ {
+	for i := 0; i < duration*len(rendition); i++ {
 		<-sem
+	}
+
+	log.Println("All DONE... Now writing file list")
+
+	// TODO: THIS HAS TO BE DONE BETTER
+	for _, eachRendition := range rendition {
+		dir := fmt.Sprintf("%s/%d/", filepath.Dir(src), eachRendition)
+
+		files, err := ioutil.ReadDir(dir)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		err = nil
+		var isDone = false
+		dataChannel := make(chan []byte)
+		fs.WriteToFile(dir+"filesList.txt", dataChannel, &err, &isDone)
+
+		for _, f := range files {
+			dataChannel <- []byte("file " + f.Name() + "\n")
+		}
+
+		close(dataChannel)
+		for !isDone && err == nil {
+			// wait
+		}
 	}
 }
 
 func getMezDurationInSeconds(src string) (seconds int) {
 
-	//cmd := exec.Command("ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", src)
-	cmd := exec.Command("bash", "-c", "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "+src)
+	cmd := exec.Command("ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", src)
+	//cmd := exec.Command("bash", "-c", "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "+src)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
@@ -63,8 +91,8 @@ func getMezDurationInSeconds(src string) (seconds int) {
 
 func splitIntoMp4(filename string, iteration int, segement int, dstFilename string) {
 
-	dstFilename = fmt.Sprintf("%s_%0d.mp4", dstFilename, iteration)
-	cmd := exec.Command("ffmpeg", "-ss", fmt.Sprintf("%d", iteration*segement), "-i", filename, "-t", fmt.Sprintf("%0d", segement),
+	dstFilename = fmt.Sprintf("%s_%04d.mp4", dstFilename, iteration)
+	cmd := exec.Command("ffmpeg", "-ss", fmt.Sprintf("%d", iteration*segement), "-i", filename, "-t", fmt.Sprintf("%d", segement),
 		"-b:v", "350K", "-b:a", "64K", "-maxrate", "350K", "-minrate", "350K", "-bufsize",
 		"350K", dstFilename)
 	var out, errB bytes.Buffer
