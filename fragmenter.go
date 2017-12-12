@@ -14,7 +14,7 @@ import (
 type empty struct{}
 
 func main() {
-	src := "/Users/saravanansilvarajoo/Media/mez/tearsOfSteel.mp4"
+	src := "media/BugsBunnyv2.mp4"
 
 	segment := 10
 	duration := getMezDurationInSeconds(src) / segment
@@ -64,7 +64,7 @@ func getMezDurationInSeconds(src string) (seconds int) {
 func splitIntoMp4(filename string, iteration int, segement int, dstFilename string) {
 
 	dstFilename = fmt.Sprintf("%s_%0d.mp4", dstFilename, iteration)
-	cmd := exec.Command("ffmpeg", "-ss", fmt.Sprintf("00:00:%0d.000", iteration*segement), "-i", filename, "-t", fmt.Sprintf("%0d", segement),
+	cmd := exec.Command("ffmpeg", "-ss", fmt.Sprintf("%d", iteration*segement), "-i", filename, "-t", fmt.Sprintf("%0d", segement),
 		"-b:v", "350K", "-b:a", "64K", "-maxrate", "350K", "-minrate", "350K", "-bufsize",
 		"350K", dstFilename)
 	var out, errB bytes.Buffer
@@ -78,7 +78,7 @@ func splitIntoMp4(filename string, iteration int, segement int, dstFilename stri
 	log.Printf("Transcoding %s...", dstFilename)
 	err = cmd.Wait()
 	if err != nil {
-		log.Fatalf("Transcoding %s... FAILED [%s]", dstFilename, err.Error())
+		log.Fatalf("Transcoding %s... FAILED [%s]", dstFilename, errB.String())
 	}
 
 	log.Printf("Transcoding %s... Done", dstFilename)
